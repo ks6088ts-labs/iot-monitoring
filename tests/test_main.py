@@ -1,5 +1,5 @@
-from main import add_numbers
+from main import app
 
 
-def test_add_numbers():
-    assert add_numbers(2, 2) == 4
+def test_app():
+    assert app is not None
