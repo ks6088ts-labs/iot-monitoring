@@ -42,8 +42,8 @@ What kind of change does this Pull Request introduce?
 - Get the code
 
 ```
-git clone git@github.com:ks6088ts/template-python.git
-cd template-python
+git clone git@github.com:ks6088ts/iot-monitoring.git
+cd iot-monitoring
 ```
 
 - Test the code
