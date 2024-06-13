@@ -7,7 +7,7 @@ from azure.iot.device import Message
 from azure.iot.device.aio import IoTHubDeviceClient
 
 
-async def send_message_command():
+async def send_message():
     # The connection string for a device should never be stored in code.
     # For the sake of simplicity we're using an environment variable here.
     conn_str = os.getenv("IOTHUB_DEVICE_CONNECTION_STRING")

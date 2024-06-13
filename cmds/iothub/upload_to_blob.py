@@ -45,7 +45,7 @@ async def upload_via_storage_blob(blob_info):
     return result
 
 
-async def upload_to_blob_command(blob_name: str):
+async def upload_to_blob(blob_name: str):
     conn_str = os.getenv("IOTHUB_DEVICE_CONNECTION_STRING")
     device_client = IoTHubDeviceClient.create_from_connection_string(conn_str)
 
