@@ -14,6 +14,18 @@ This is a template repository for Python
 
 ## Development instructions
 
+### Architecture
+
+[![architecture](docs/architecture.png)](docs/architecture.png)
+
+### How to use
+
+Run the following command to start the project and access Grafana at [http://localhost:3000](http://localhost:3000).
+
+```shell
+docker compose up
+```
+
 ### Local development
 
 Use Makefile to run the project locally.
