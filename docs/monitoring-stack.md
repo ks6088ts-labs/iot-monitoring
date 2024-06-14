@@ -21,10 +21,10 @@ docker compose up
 # Open dashboard "Node Exporter Full"
 ```
 
-http://localhost:3000 にアクセスし、Grafana にログインします。  
-初回ログイン時のユーザ名とパスワードはどちらも `admin` です。  
-パスワードを変更する画面が表示されるので、新しいパスワードを設定します。  
-Dashboards > Services > Node Exporter Full を開くと、ノードのメトリクスが表示されます。  
+http://localhost:3000 にアクセスし、Grafana にログインします。
+初回ログイン時のユーザ名とパスワードはどちらも `admin` です。
+パスワードを変更する画面が表示されるので、新しいパスワードを設定します。
+Dashboards > Services > Node Exporter Full を開くと、ノードのメトリクスが表示されます。
 表示する time range を短くしたり、自動更新間隔を短くすると変化が見やすくなります。
 
 ### ノードのメトリクスを変化させてみる
@@ -69,6 +69,18 @@ docker compose stop node-exporter
 ```
 
 一定時間後に Slack にアラート通知が届くことを確認します。
+
+### Prometheus の Exporter を追加する
+
+[Prometheus Python Client](https://github.com/prometheus/client_python) を使用して、カスタムメトリクスをエクスポートするサービスを追加します。
+
+```shell
+poetry run python main.py run-prometheus-target \
+    --num-devices 12 \
+    --port 8000
+```
+
+## 参考文献
 
 ### Prometheus
 

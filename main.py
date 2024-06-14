@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from cmds.iothub.receive_direct_method import receive_direct_method as iothub_receive_direct_method
 from cmds.iothub.send_message import send_message as iothub_send_message
 from cmds.iothub.upload_to_blob import upload_to_blob as iothub_upload_to_blob
+from cmds.prometheus.simulator import run_simulators
 
 app = typer.Typer()
 
@@ -47,6 +48,19 @@ def upload_to_blob(
 ):
     setup_logging(debug)
     asyncio.run(iothub_upload_to_blob(blob_name=blob_name))
+
+
+@app.command()
+def run_prometheus_target(
+    num_devices: Annotated[int, typer.Option(help="Number of devices to simulate")] = 3,
+    port: Annotated[int, typer.Option(help="Port to run the Prometheus target on")] = 8000,
+    debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False,
+):
+    setup_logging(debug)
+    run_simulators(
+        num_devices=num_devices,
+        port=port,
+    )
 
 
 if __name__ == "__main__":
