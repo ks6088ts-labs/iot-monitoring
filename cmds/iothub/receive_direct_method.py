@@ -6,7 +6,7 @@ from azure.iot.device import MethodResponse
 from azure.iot.device.aio import IoTHubDeviceClient
 
 
-async def receive_direct_method_command():
+async def receive_direct_method():
     # The connection string for a device should never be stored in code.
     # For the sake of simplicity we're using an environment variable here.
     conn_str = os.getenv("IOTHUB_DEVICE_CONNECTION_STRING")
