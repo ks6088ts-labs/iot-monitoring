@@ -1,5 +1,4 @@
 # https://github.com/Azure/azure-iot-sdk-python/blob/main/samples/async-hub-scenarios/upload_to_blob.py
-import os
 import pprint
 from logging import getLogger
 
@@ -21,13 +20,11 @@ async def upload_via_storage_blob(blob_info, image_data: bytes):
     return blob_client.upload_blob(image_data)
 
 
-async def upload_to_blob(blob_name: str, image_data: bytes):
-    conn_str = os.getenv("IOTHUB_DEVICE_CONNECTION_STRING")
-    device_client = IoTHubDeviceClient.create_from_connection_string(conn_str)
-
-    # Connect the client.
-    await device_client.connect()
-
+async def upload_to_blob(
+    device_client: IoTHubDeviceClient,
+    blob_name: str,
+    image_data: bytes,
+):
     # get the Storage SAS information from IoT Hub.
     storage_info = await device_client.get_storage_info_for_blob(blob_name)
     result = {"status_code": -1, "status_description": "N/A"}
@@ -63,6 +60,3 @@ async def upload_to_blob(blob_name: str, image_data: bytes):
             result["status_code"],
             result["status_description"],
         )
-
-    # Finally, shut down the client
-    await device_client.shutdown()
