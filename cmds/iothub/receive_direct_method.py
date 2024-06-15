@@ -1,9 +1,13 @@
 # https://github.com/Azure/azure-iot-sdk-python/blob/main/samples/async-hub-scenarios/receive_direct_method.py
 import asyncio
 import os
+import time
 
 from azure.iot.device import MethodResponse
 from azure.iot.device.aio import IoTHubDeviceClient
+
+from cmds.cv.capture import capture_image
+from cmds.iothub.upload_to_blob import upload_to_blob
 
 
 async def receive_direct_method():
@@ -30,6 +34,27 @@ async def receive_direct_method():
             payload = {"result": True, "data": 1234}  # set response payload
             status = 200  # set return status code
             print("executed method2")
+        elif method_request.name == "capture_photo":
+            try:
+                camera_index = method_request.payload.get("camera_index", 0)
+                blob_name = method_request.payload.get("blob_name", time.strftime("%Y-%m-%d-%H-%M-%S") + ".jpg")
+
+                debug = False
+                if debug:
+                    # read image from file for debugging purposes
+                    with open("./artifacts/image.jpg", "rb") as f:
+                        image_data = f.read()
+                else:
+                    # capture image from camera
+                    image_data = capture_image(camera_index=camera_index)
+
+                await upload_to_blob(blob_name=blob_name, image_data=image_data)
+                payload = {"result": True, "data": 1234}  # set response payload
+                status = 200  # set return status code
+                print("executed capture_photo")
+            except Exception as e:
+                payload = {"result": False, "data": str(e)}
+                status = 500
         else:
             payload = {"result": False, "data": "unknown method"}  # set response payload
             status = 400  # set return status code
