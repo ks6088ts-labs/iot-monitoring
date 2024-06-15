@@ -10,8 +10,7 @@ from azure.storage.blob import BlobClient
 logger = getLogger(__name__)
 
 
-async def upload_via_storage_blob(blob_info):
-    print("Azure Blob storage v12 - Python quickstart sample")
+async def upload_via_storage_blob(blob_info, image_data: bytes):
     sas_url = "https://{}/{}/{}{}".format(
         blob_info["hostName"],
         blob_info["containerName"],
@@ -19,33 +18,10 @@ async def upload_via_storage_blob(blob_info):
         blob_info["sasToken"],
     )
     blob_client = BlobClient.from_blob_url(sas_url)
-
-    # The following file code can be replaced with simply a sample file in a directory.
-
-    # Create a file in local Documents directory to upload and download
-    local_file_name = "artifacts/data.jpg"
-    filename = os.path.join(os.path.dirname(os.path.realpath(__file__)), local_file_name)
-
-    # Write text to the file
-    if not os.path.exists(os.path.dirname(filename)):
-        os.makedirs(os.path.dirname(filename))
-
-    # Create a file in local Documents directory to upload and download
-    # file = open(filename, "w")
-    # file.write("Hello, World!")
-    # file.close()
-
-    # Perform the actual upload for the data.
-    print("\nUploading to Azure Storage as blob:\n\t" + local_file_name)
-    # # Upload the created file
-    with open(filename, "rb") as data:
-        # filename should be YYYYMMDDHHMMSS.jpg
-        result = blob_client.upload_blob(data)
-
-    return result
+    return blob_client.upload_blob(image_data)
 
 
-async def upload_to_blob(blob_name: str):
+async def upload_to_blob(blob_name: str, image_data: bytes):
     conn_str = os.getenv("IOTHUB_DEVICE_CONNECTION_STRING")
     device_client = IoTHubDeviceClient.create_from_connection_string(conn_str)
 
@@ -58,7 +34,7 @@ async def upload_to_blob(blob_name: str):
 
     # Using the Storage Blob V12 API, perform the blob upload.
     try:
-        upload_result = await upload_via_storage_blob(storage_info)
+        upload_result = await upload_via_storage_blob(storage_info, image_data)
         if hasattr(upload_result, "error_code"):
             result = {
                 "status_code": upload_result.error_code,

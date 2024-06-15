@@ -42,13 +42,23 @@ def receive_direct_method(
 
 @app.command()
 def upload_to_blob(
-    blob_name: Annotated[str, typer.Option(help="Enable debug mode")] = "YourBlobName",
+    blob_name: Annotated[str, typer.Option(help="Enable debug mode")] = "YourBlobName.jpg",
+    path: Annotated[str, typer.Option(help="Path to the image file")] = "image.jpg",
     debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False,
 ):
     from cmds.iothub.upload_to_blob import upload_to_blob as iothub_upload_to_blob
 
     setup_logging(debug)
-    asyncio.run(iothub_upload_to_blob(blob_name=blob_name))
+
+    with open(path, "rb") as f:
+        image_data = f.read()
+
+    asyncio.run(
+        iothub_upload_to_blob(
+            blob_name=blob_name,
+            image_data=image_data,
+        )
+    )
 
 
 @app.command()
