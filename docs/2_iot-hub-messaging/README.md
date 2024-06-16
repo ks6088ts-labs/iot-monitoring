@@ -1,4 +1,6 @@
-# Azure IoT Hub Messaging
+# iot-hub-messaging
+
+Azure IoT Hub を使用して、IoT デバイスとクラウド間でメッセージの送受信を行います。
 
 ## 環境構築
 
@@ -10,8 +12,20 @@ cd azure-ai-services-solutions/infra
 make deploy
 ```
 
+Azure IoT Hub を経由して Azure Blob Storage にファイルアップロードするために、Azure IoT Hub と Azure Storage Account を関連付ける必要があります。以下の記事を参考に設定してください。
+
 - [Azure IoT Hub を使用してデバイスからクラウドにファイルをアップロードする (Python) > IoT Hub への Azure Storage アカウントの関連付け](https://learn.microsoft.com/ja-jp/azure/iot-hub/file-upload-python#associate-an-azure-storage-account-to-iot-hub)
 - [IoTHub を経由して Blob Storage にファイルをアップロードするメモ for Python3](https://zenn.dev/tmitsuoka0423/articles/iothub-file-upload-python)
+
+## アーキテクチャ図
+
+[![architecture](./architecture.png)](./architecture.png)
+
+## ユーザーストーリー
+
+- ユーザーは、IoT デバイスにコマンドを発行できる (Direct Method)
+- ユーザーは、IoT デバイスの状態を取得できる (Device Twin)
+- ユーザーは、IoT デバイスが撮影した画像を取得できる (Blob Storage)
 
 ## スクリプト実行 demo
 
@@ -35,9 +49,6 @@ poetry run python main.py receive-direct-method
 
 # 3. upload-to-blob
 poetry run python main.py upload-to-blob --blob-name YYYYMMDD_HHMMSS.jpg
-
-# 4. direct method を受けてカメラ画像を取得してアップロード
-# FIXME: 未実装
 ```
 
 # References
