@@ -16,3 +16,9 @@ Prometheus でメトリクスを収集し、Grafana で可視化する IoT デ�
 Azure IoT Hub でデバイスからクラウドにファイルをアップロードする IoT デバイスの監視サービス
 
 [![architecture](./docs/2_iot-hub-messaging/architecture.png)](./docs/2_iot-hub-messaging/architecture.png)
+
+### [3_event-grid-messaging](./docs/3_event-grid-messaging/README.md)
+
+Azure Event Grid で IoT Hub からのイベントを受信し、Azure Functions で処理する IoT デバイスの監視サービス
+
+[![architecture](./docs/3_event-grid-messaging/architecture.png)](./docs/3_event-grid-messaging/architecture.png)
