@@ -26,7 +26,7 @@ prometheus-client = "^0.20.0"
 [tool.poetry.group.iot.dependencies]
 azure-iot-device = "^2.13.1"
 azure-storage-blob = "^12.20.0"
-opencv-python = "^4.10.0.82"
+opencv-python = "^4.10.0.84"
 
 [build-system]
 requires = ["poetry-core"]
